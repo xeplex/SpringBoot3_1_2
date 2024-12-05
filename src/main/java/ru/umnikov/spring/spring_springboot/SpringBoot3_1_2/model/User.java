@@ -1,13 +1,22 @@
 package ru.umnikov.spring.spring_springboot.SpringBoot3_1_2.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @ToString.Exclude
     private int id;
 
     @Column(name = "name")
@@ -25,62 +34,12 @@ public class User {
     @Column(name = "weight")
     private double weight;
 
-    public User() {
-    }
 
     public User(String name, String surname, int birthYear, double height, double weight) {
         this.name = name;
         this.surname = surname;
         this.birthYear = birthYear;
         this.height = height;
-        this.weight = weight;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public int getBirthYear() {
-        return birthYear;
-    }
-
-    public void setBirthYear(int birthYear) {
-        this.birthYear = birthYear;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
         this.weight = weight;
     }
 }
