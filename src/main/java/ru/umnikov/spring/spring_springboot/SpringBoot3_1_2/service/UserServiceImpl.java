@@ -1,6 +1,7 @@
 package ru.umnikov.spring.spring_springboot.SpringBoot3_1_2.service;
 
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,9 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User getById(int id) {
-        return userRepository.findById(id).isPresent() ?
-                userRepository.findById(id).get() :
-                null;
+        return userRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -50,10 +49,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void update(User user, int id) {
         User existingUser = getById(id);
-        existingUser.setName(user.getName());
-        existingUser.setSurname(user.getSurname());
-        existingUser.setBirthYear(user.getBirthYear());
-        existingUser.setHeight(user.getHeight());
-        existingUser.setWeight(user.getWeight());
+        if (existingUser != null) {
+            existingUser.setName(user.getName());
+            existingUser.setSurname(user.getSurname());
+            existingUser.setBirthYear(user.getBirthYear());
+            existingUser.setHeight(user.getHeight());
+            existingUser.setWeight(user.getWeight());
+        } else {
+            throw new EntityNotFoundException("User  with id " + id + " not found.");
+        }
     }
 }
